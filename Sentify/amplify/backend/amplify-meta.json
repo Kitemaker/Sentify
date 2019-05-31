@@ -1,0 +1,35 @@
+{
+	"providers": {
+		"awscloudformation": {
+			"AuthRoleName": "entify-20190531100411-authRole",
+			"UnauthRoleArn": "arn:aws:iam::647087826666:role/entify-20190531100411-unauthRole",
+			"AuthRoleArn": "arn:aws:iam::647087826666:role/entify-20190531100411-authRole",
+			"Region": "us-east-1",
+			"DeploymentBucketName": "entify-20190531100411-deployment",
+			"UnauthRoleName": "entify-20190531100411-unauthRole",
+			"StackName": "entify-20190531100411",
+			"StackId": "arn:aws:cloudformation:us-east-1:647087826666:stack/entify-20190531100411/5733f1d0-835d-11e9-95ba-0a009cdf2216"
+		}
+	},
+	"hosting": {
+		"S3AndCloudFront": {
+			"service": "S3AndCloudFront",
+			"providerPlugin": "awscloudformation",
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/entify-20190531100411-deployment/amplify-cfn-templates/hosting/template.json",
+				"logicalId": "hostingS3AndCloudFront"
+			},
+			"lastPushTimeStamp": "2019-05-31T04:45:30.957Z",
+			"output": {
+				"CloudFrontSecureURL": "https://d15aosnbaoktpf.cloudfront.net",
+				"S3BucketSecureURL": "https://entify-20190531100556--hostingbucket.s3.amazonaws.com",
+				"WebsiteURL": "http://entify-20190531100556--hostingbucket.s3-website-us-east-1.amazonaws.com",
+				"CloudFrontDistributionID": "E9MTGWR8DDYD3",
+				"Region": "us-east-1",
+				"HostingBucketName": "entify-20190531100556--hostingbucket",
+				"CloudFrontDomainName": "d15aosnbaoktpf.cloudfront.net"
+			},
+			"lastPushDirHash": "ba00LYugTpdhlVea3uuVbfd4B64="
+		}
+	}
+}
