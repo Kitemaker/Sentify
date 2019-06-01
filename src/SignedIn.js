@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { UserSession } from 'blockstack'
 import InputComp from  './InputComp';
-import OutComp from './OutComp';
 import ScoreCard from './ScoreCard';
 import { appConfig, ME_FILENAME } from './constants';
 import './SignedIn.css';
@@ -155,8 +154,8 @@ getapi =(message) =>{
   
   render() {
     const username = this.userSession.loadUserData().username
-    const me = this.state.me
-    const redirectToMe = this.state.redirectToMe 
+    //const me = this.state.me
+    //const redirectToMe = this.state.redirectToMe 
     return (
       <div className="SignedIn">
       <NavBar username={username} signOut={this.signOut}/>     
@@ -204,8 +203,7 @@ getapi =(message) =>{
      
             </div>
          
-      </div>
-          
+      </div>   
          
         
    
