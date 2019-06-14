@@ -5,6 +5,7 @@ import ScoreCard from './ScoreCard';
 import { appConfig, ME_FILENAME } from './constants';
 import './SignedIn.css';
 import NavBar from './NavBar';
+
 //import EditMe from './EditMe'
 //import Kingdom from './Kingdom'
 //import OptionsList from './OptionsList'
@@ -13,6 +14,10 @@ import NavBar from './NavBar';
 
 const url = "https://nvxhqhbiwh.execute-api.us-east-1.amazonaws.com/test/blockstack-sentio-api-handler-python?inputText=";
 var request = require('request');
+var Recaptcha = require('react-recaptcha');
+
+
+
 
 class SignedIn extends Component {
 
@@ -31,6 +36,9 @@ class SignedIn extends Component {
     this.signOut = this.signOut.bind(this)
   }
 
+TEST_SITE_KEY = "6LeIp6gUAAAAAI8MM2rLbxitRSwy1XISqeamQzj3";
+DELAY = 1500;
+recaptchaInstance;
   // State to manage for the class
   state = {
     me: {},
@@ -48,6 +56,12 @@ class SignedIn extends Component {
 // Coming from templates
   componentWillMount() {
     this.loadMe()
+   
+  }
+  componentDidMount(){
+    console.log('msg from componentDidMount');
+    let submitBtn = document.getElementById('#submit');
+    submitBtn.disabled = true;
   }
 
   loadMe() {
@@ -120,6 +134,8 @@ getapi =(message) =>{
   console.log(document.getElementById('inputbox').nodeValue);
    const textFomUser = document.getElementById('inputbox').nodeValue;
    this.getapi(textFomUser);
+   let btn = document.getElementById('#submit');
+   btn.disabled=true;
      
   }
   
@@ -151,6 +167,22 @@ getapi =(message) =>{
       reader.readAsText(file)
     })
   }
+
+
+
+  recaptchaCallback = ()=> {
+    console.log('loaded Recaptha !!!!');
+  };
+
+  verifyCallback = (token) =>{   
+    console.log('ready to verify');
+    let btn = document.getElementById('#submit');
+    btn.disabled=false;
+    };
+
+  resetRecaptcha = () => {
+  this.recaptchaInstance.reset();  
+  };
   
   render() {
     const username = this.userSession.loadUserData().username
@@ -159,8 +191,8 @@ getapi =(message) =>{
     return (
       <div className="SignedIn">
       <NavBar username={username} signOut={this.signOut}/>     
-      <div className="w3-col" >
-          <h2>Analyse Sentiments of Text</h2>       
+        <div className="w3-col" style={{minWidth:"100px",overflow:'scroll'}}>
+          <h2 style={{aligh:'center'}}>Analyse Sentiments of Text</h2>       
           <div className="w3-row">
             <div className="w3-col w3-center " >
               <InputComp input={this.state.input} change={this.onInputChange} id='content-target' text={this.state.text}/>
@@ -175,7 +207,18 @@ getapi =(message) =>{
        
           <div className="w3-row" style={{padding: '20px', paddingLeft:"10%", paddingRight:"10%", margin:"10px"}}>
               <div className="w3-col w3-center " >
-                <button  className="w3-btn w3-block w3-teal" style={{  background:'grey', align:'center'}} onClick={this.swithStateHandler}>Submit</button>
+                <button  id="#submit"  className="w3-btn w3-block w3-teal" style={{  background:'grey', align:'center'}} onClick={this.swithStateHandler}>Submit</button>
+                <div>
+                 
+                <Recaptcha  ref={e => this.recaptchaInstance = e}
+                              sitekey={this.TEST_SITE_KEY}
+                              render="explicit"
+                              verifyCallback={this.verifyCallback}
+                              onloadCallback={this.recaptchaCallback}/>
+                  <div>
+                  <button onClick={this.resetRecaptcha}> Reset Capthca</button>
+                  </div>
+                </div>
             </div>
           </div>    
           
@@ -186,18 +229,18 @@ getapi =(message) =>{
               </div>
           </div>     
          <div className="w3-row w3-center" style={{  padding:"10%"}}>
-            <div className="w3-col w3-center"  style={{  width:"25%"}}>
+            <div className="w3-col l1 m1 w3-center"  style={{  width:"25%"}}>
             <ScoreCard section= "Positive" section_score = {this.state.positive} />
             </div>
-            <div className="w3-col w3-center"  style={{  width:"25%"}}> 
+            <div className="w3-col l1 m1 w3-center"  style={{  width:"25%"}}> 
               <ScoreCard section= "Negative" section_score = {this.state.negative}/>
             </div>       
   
       
-            <div className="w3-col w3-center"  style={{  width:"25%"}}>
+            <div className="w3-col l1 m2 w3-center"  style={{  width:"25%"}}>
             <ScoreCard section= "Mixed" section_score = {this.state.mixed}/>
             </div>
-            <div className="w3-col w3-center"  style={{  width:"25%"}}>
+            <div className="w3-col l1 m2 w3-center"  style={{  width:"25%"}}>
               <ScoreCard section= "Neutral" section_score = {this.state.neutral}/>
             </div>
      
@@ -205,7 +248,7 @@ getapi =(message) =>{
          
       </div>   
          
-        
+     
    
       </div>
     );
