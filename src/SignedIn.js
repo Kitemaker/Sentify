@@ -221,13 +221,13 @@ getapi =(message) =>{
                 <button  id="#submit"  className="w3-btn w3-block w3-teal" style={{  background:'grey', align:'center'}} onClick={this.swithStateHandler}>Submit</button>
                 <div >
                     <div className="w3-row w3-center" style={{padding: '20px'}}>
-                    <div className="w3-col w3-center " >
-                        <Recaptcha  ref={e => this.recaptchaInstance = e}
-                                      sitekey={this.TEST_SITE_KEY}
-                                      render="explicit"
-                                      verifyCallback={this.verifyCallback}
-                                      onloadCallback={this.recaptchaCallback}/>
-                     </div>
+                        <div className="w3-col w3-center" >
+                            <Recaptcha  ref={e => this.recaptchaInstance = e}
+                                          sitekey={this.TEST_SITE_KEY}
+                                          render="explicit"
+                                          verifyCallback={this.verifyCallback}
+                                          onloadCallback={this.recaptchaCallback}/>
+                        </div>
                     </div>
                     <div>
                         <button onClick={this.resetRecaptcha}> Reset Capthca</button>
