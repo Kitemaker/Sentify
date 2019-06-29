@@ -119,9 +119,9 @@ getapi =(message) =>{
   }
   
   onInputChange = (event) => {
-    console.log("message from onInputChange ", event.target.value );
+    //console.log("message from onInputChange ", event.target.value );
     // eslint-disable-next-line no-template-curly-in-string
-    console.log('state.input = ' + this.state.input  + ' state.outpt =' + this.state.output);
+    //console.log('state.input = ' + this.state.input  + ' state.outpt =' + this.state.output);
   
     this.setState({
      // output:this.state.output,
@@ -142,9 +142,18 @@ getapi =(message) =>{
   getFile = (event) => {
     const input = event.target
     if ('files' in input && input.files.length > 0) {
-      this.placeFileContent(
-        document.getElementById('content-target'),
-        input.files[0])
+      console.log(input.files[0]);
+      let fname = input.files[0].name;
+      let fext = fname.split('.')[fname.split('.').length-1];
+      if(fext && (fext.toLowerCase() === 'txt' || fext.toLowerCase() === 'text')){
+        this.placeFileContent(
+          document.getElementById('content-target'),
+          input.files[0])
+      }
+      else{
+        alert('Please select text file.');
+      }
+     
     }
   }
   
@@ -191,10 +200,10 @@ getapi =(message) =>{
     return (
       <div className="SignedIn">
       <NavBar username={username} signOut={this.signOut}/>     
-        <div className="w3-col" style={{minWidth:"100px",overflow:'scroll'}}>
-          <h2 style={{aligh:'center'}}>Analyse Sentiments of Text</h2>       
-          <div className="w3-row">
+        <div className="w3-col" style={{minWidth:"100px",overflow:'scroll'}}> 
+          <div className="w3-row w3-center">
             <div className="w3-col w3-center " >
+            <h2 style={{alignItems:'center'}}>Analyse Sentiments of Text</h2>  
               <InputComp input={this.state.input} change={this.onInputChange} id='content-target' text={this.state.text}/>
             </div>
           </div>
@@ -205,19 +214,24 @@ getapi =(message) =>{
             </div>      
           </div>   
        
-          <div className="w3-row" style={{padding: '20px', paddingLeft:"10%", paddingRight:"10%", margin:"10px"}}>
+         
+          <div className="w3-row w3-center" style={{padding: '20px', paddingLeft:"10%", paddingRight:"10%", margin:"10px"}}>
+            
               <div className="w3-col w3-center " >
                 <button  id="#submit"  className="w3-btn w3-block w3-teal" style={{  background:'grey', align:'center'}} onClick={this.swithStateHandler}>Submit</button>
-                <div>
-                 
-                <Recaptcha  ref={e => this.recaptchaInstance = e}
-                              sitekey={this.TEST_SITE_KEY}
-                              render="explicit"
-                              verifyCallback={this.verifyCallback}
-                              onloadCallback={this.recaptchaCallback}/>
-                  <div>
-                  <button onClick={this.resetRecaptcha}> Reset Capthca</button>
-                  </div>
+                <div >
+                    <div className="w3-row w3-center" style={{padding: '20px'}}>
+                    <div className="w3-col w3-center " >
+                        <Recaptcha  ref={e => this.recaptchaInstance = e}
+                                      sitekey={this.TEST_SITE_KEY}
+                                      render="explicit"
+                                      verifyCallback={this.verifyCallback}
+                                      onloadCallback={this.recaptchaCallback}/>
+                     </div>
+                    </div>
+                    <div>
+                        <button onClick={this.resetRecaptcha}> Reset Capthca</button>
+                    </div>
                 </div>
             </div>
           </div>    
@@ -227,24 +241,21 @@ getapi =(message) =>{
               <div className="w3-col w3-center "  >
                 <ScoreCard section= "Text Sentiments" section_score = {this.state.sentiment} />
               </div>
-          </div>     
-         <div className="w3-row w3-center" style={{  padding:"10%"}}>
-            <div className="w3-col l1 m1 w3-center"  style={{  width:"25%"}}>
+        </div>     
+        <div className="w3-row w3-center" style={{  padding:"5%"}}>
+            <div className="w3-col l3 m6 s12 "  >
             <ScoreCard section= "Positive" section_score = {this.state.positive} />
-            </div>
-            <div className="w3-col l1 m1 w3-center"  style={{  width:"25%"}}> 
+            </div>           
+            <div className="w3-col l3 m6 s12 "  > 
               <ScoreCard section= "Negative" section_score = {this.state.negative}/>
             </div>       
-  
-      
-            <div className="w3-col l1 m2 w3-center"  style={{  width:"25%"}}>
+            <div className="w3-col l3 m6 s12 "  >
             <ScoreCard section= "Mixed" section_score = {this.state.mixed}/>
             </div>
-            <div className="w3-col l1 m2 w3-center"  style={{  width:"25%"}}>
+            <div className="w3-col l3 m6 s12 "  >
               <ScoreCard section= "Neutral" section_score = {this.state.neutral}/>
-            </div>
-     
-            </div>
+            </div>     
+        </div>
          
       </div>   
          
