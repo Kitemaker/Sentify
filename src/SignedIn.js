@@ -2,14 +2,9 @@ import React, { Component } from 'react'
 import { UserSession } from 'blockstack'
 import InputComp from  './InputComp';
 import ScoreCard from './ScoreCard';
-import { appConfig, ME_FILENAME } from './constants';
+import { appConfig } from './constants';
 import './SignedIn.css';
 import NavBar from './NavBar';
-
-//import EditMe from './EditMe'
-//import Kingdom from './Kingdom'
-//import OptionsList from './OptionsList'
-//import OtherKingdoms from './OtherKingdoms'
 
 
 const url = "https://nvxhqhbiwh.execute-api.us-east-1.amazonaws.com/test/blockstack-sentio-api-handler-python?inputText=";
@@ -31,8 +26,8 @@ class SignedIn extends Component {
       redirectToMe: false
     }
 
-    this.loadMe = this.loadMe.bind(this)
-    this.saveMe = this.saveMe.bind(this)
+  //  this.loadMe = this.loadMe.bind(this)
+  //  this.saveMe = this.saveMe.bind(this)
     this.signOut = this.signOut.bind(this)
   }
 
@@ -65,27 +60,27 @@ recaptchaInstance;
   }
 
   loadMe() {
-    const options = { decrypt: false }
-    this.userSession.getFile(ME_FILENAME, options)
-    .then((content) => {
-      if(content) {
-        const me = JSON.parse(content)
-        this.setState({me, redirectToMe: false})
-      } else {
-        const me = null
+    // const options = { decrypt: false }
+    // this.userSession.getFile(ME_FILENAME, options)
+    // .then((content) => {
+    //   if(content) {
+    //     const me = JSON.parse(content)
+    //     this.setState({me, redirectToMe: false})
+    //   } else {
+    //     const me = null
 
-        this.setState({me, redirectToMe: true})
-      }
-    })
+    //     this.setState({me, redirectToMe: true})
+    //   }
+    // })
   }
 
   saveMe(me) {
-    this.setState({me, savingMe: true})
-    const options = { encrypt: false }
-    this.userSession.putFile(ME_FILENAME, JSON.stringify(me), options)
-    .finally(() => {
-      this.setState({savingMe: false})
-    })
+    // this.setState({me, savingMe: true})
+    // const options = { encrypt: false }
+    // this.userSession.putFile(ME_FILENAME, JSON.stringify(me), options)
+    // .finally(() => {
+    //   this.setState({savingMe: false})
+    // })
   }
 
   signOut(e) {
@@ -203,7 +198,15 @@ getapi =(message) =>{
         <div className="w3-col" style={{minWidth:"100px",overflow:'scroll'}}> 
           <div className="w3-row w3-center">
             <div className="w3-col w3-center " >
-            <h2 style={{alignItems:'center'}}>Analyse Sentiments of Text</h2>  
+            <h2 style={{alignItems:'center'}}>Analyse Sentiments of Text</h2> 
+            <div className="w3-row w3-center" style={{padding: '20px', paddingLeft:"20%", paddingRight:"20%", margin:"10px"}}>
+            
+            <div className="w3-col w3-center " > 
+            <p  style={{textAlign:"justify"}}>Get sentiments of your text. Please Enter or copy/paste text in the input box or upload text file (*.txt, *text). 
+            Overall sentiment of the input text and sentiment score shall be displayed after analysis of text. Please complete CAPTCHA
+            to enable 'Submit' buttom and reset the CAPTCHA to ebnable Submit button after that.</p>  
+            </div>
+            </div>
               <InputComp input={this.state.input} change={this.onInputChange} id='content-target' text={this.state.text}/>
             </div>
           </div>
@@ -215,7 +218,7 @@ getapi =(message) =>{
           </div>   
        
          
-          <div className="w3-row w3-center" style={{padding: '20px', paddingLeft:"10%", paddingRight:"10%", margin:"10px"}}>
+          <div className="w3-row w3-center" style={{padding: '20px', paddingLeft:"20%", paddingRight:"20%", margin:"10px"}}>
             
               <div className="w3-col w3-center " >
                 <button  id="#submit"  className="w3-btn w3-block w3-teal" style={{  background:'grey', align:'center'}} onClick={this.swithStateHandler}>Submit</button>
@@ -237,12 +240,12 @@ getapi =(message) =>{
           </div>    
           
           
-         <div className="w3-row" style={{ paddingLeft:"10%", paddingRight:"10%"}}>
+         <div className="w3-row" style={{ paddingLeft:"20%", paddingRight:"20%"}}>
               <div className="w3-col w3-center "  >
                 <ScoreCard section= "Text Sentiments" section_score = {this.state.sentiment} />
               </div>
         </div>     
-        <div className="w3-row w3-center" style={{  padding:"5%"}}>
+        <div className="w3-row w3-center" style={{  padding:"10px"}}>
             <div className="w3-col l3 m6 s12 "  >
             <ScoreCard section= "Positive" section_score = {this.state.positive} />
             </div>           
