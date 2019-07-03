@@ -3,7 +3,7 @@
   "name": "Sentify",
   "icons": [
     {
-      "src": "https://www.sentify.org/sentify_launcher.png",
+      "src": "https://www.sentify.org/sentify.png",
       "sizes": "192x192",
       "type": "image/png"
     }
